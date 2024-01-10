@@ -6,6 +6,7 @@ const LoginPage = () => {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
+        <span>Try id: admin@admin.com | password: password</span>
         <form action={handleGithubLogin}>
           <button className={styles.github}>Login with Github</button>
         </form>

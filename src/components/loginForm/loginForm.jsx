@@ -11,10 +11,9 @@ const LoginForm = () => {
   const [state, formAction] = useFormState(login, undefined);
 
   const router = useRouter();
-
   useEffect(() => {
-    state?.success ? router.push("/") : null;
-  }, [state?.success, router]);
+    state?.error === "NEXT_REDIRECT" ? router.push("/") : null;
+  }, [state?.error, router]);
   return (
     <form action={formAction} className={styles.form}>
       <input type="text" name="email" placeholder="email" />

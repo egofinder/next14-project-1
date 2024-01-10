@@ -1,19 +1,23 @@
+import Link from "next/link";
 import styles from "./home.module.css";
 import Image from "next/image";
 const Home = () => {
   return (
     <div className={styles.container}>
       <div className={styles.textContainer}>
-        <h1 className={styles.title}>Creative Throughts Agency.</h1>
+        <h1 className={styles.title}>Create Next.js Website Study</h1>
         <p className={styles.desc}>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eius,
-          inventore doloribus est quas libero sunt blanditiis veritatis sequi
-          necessitatibus, placeat delectus, ex excepturi dolore. Doloribus enim
-          tempore sequi error vel.
+          Navigate through the site to discover my journey, skills, and
+          expertise. Gain insights into the technologies utilized, methodologies
+          employed, and the problem-solving approach taken in the site. Stay
+          tuned for updates on the latest projects, blog posts, and my ongoing
+          exploration of emerging technologies.
         </p>
         <div className={styles.buttons}>
           <button className={styles.button}>Learn More</button>
-          <button className={styles.button}>Contact</button>
+          <Link href="/contact" className={styles.contactButton}>
+            Contact
+          </Link>
         </div>
         <div className={styles.brands}>
           <Image src="/brands.png" alt="" fill className={styles.brandImg} />
