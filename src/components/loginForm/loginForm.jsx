@@ -6,7 +6,6 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useFormState } from "react-dom";
-import { revalidatePath } from "next/cache";
 
 const LoginForm = () => {
   const [state, formAction] = useFormState(login, undefined);
