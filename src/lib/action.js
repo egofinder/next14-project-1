@@ -3,7 +3,10 @@
 import { connectToDb } from "./utils";
 import { Post, User } from "./models";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+
 import { signIn, signOut } from "@/lib/auth";
+import { AuthError } from "next-auth";
 import bcrypt from "bcryptjs";
 
 export const addPost = async (formData) => {
@@ -82,21 +85,29 @@ export const register = async (previousState, formData) => {
       img,
     });
     await newUser.save();
-    return { success: true };
-  } catch (err) {
-    console.log(err);
-    return { error: "Something went wrong!" };
+  } catch (error) {
+    if (error) {
+      return "something went wrong";
+    }
+    // throw error;
   }
 };
 
 export const login = async (previousState, formData) => {
-  const { email, password } = Object.fromEntries(formData);
+  // const { email, password } = Object.fromEntries(formData);
 
   try {
-    await signIn("credentials", { email, password });
-  } catch (err) {
-    console.log(err);
-    return { error: err.message };
+    await signIn("credentials", formData);
+  } catch (error) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case "CredentialsSignin":
+          return "Invalid credentials.";
+        default:
+          return "Something went wrong.";
+      }
+    }
+    throw error;
   }
 };
 

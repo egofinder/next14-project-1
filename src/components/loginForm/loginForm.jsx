@@ -8,18 +8,18 @@ import Link from "next/link";
 import { useFormState } from "react-dom";
 
 const LoginForm = () => {
-  const [state, formAction] = useFormState(login, undefined);
+  const [errorMessage, formAction] = useFormState(login, undefined);
 
   const router = useRouter();
   useEffect(() => {
-    state?.error === "NEXT_REDIRECT" ? router.push("/") : null;
-  }, [state?.error, router]);
+    errorMessage === "NEXT_REDIRECT" ? router.push("/") : null;
+  }, [errorMessage, router]);
   return (
     <form action={formAction} className={styles.form}>
       <input type="text" name="email" placeholder="email" />
       <input type="text" name="password" placeholder="Password" />
       <button>Login with Email</button>
-      {state?.error}
+      {errorMessage ?? errorMessage}
       <Link href="/register">
         {"Don't have an account?"} <b>Register</b>
       </Link>

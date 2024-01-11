@@ -7,13 +7,13 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 const RegisterForm = () => {
-  const [state, formAction] = useFormState(register, undefined);
+  const [errorMessage, formAction] = useFormState(register, undefined);
 
   const router = useRouter();
 
   useEffect(() => {
-    state?.success ? router.push("/login") : null;
-  }, [state?.success, router]);
+    errorMessage ? router.push("/login") : null;
+  }, [errorMessage, router]);
 
   return (
     <form className={styles.form} action={formAction}>
@@ -28,7 +28,7 @@ const RegisterForm = () => {
         placeholder="Re-enter password"
       />
       <button>Register</button>
-      {state?.error}
+      {errorMessage ?? errorMessage}
       <Link href="/login">
         Have an account? <b>Login</b>
       </Link>
