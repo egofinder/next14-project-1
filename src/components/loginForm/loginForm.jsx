@@ -5,7 +5,13 @@ import styles from "./loginForm.module.css";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useFormState } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
+
+export function LoginButton() {
+  const { pending } = useFormStatus();
+
+  return <button>{pending ? "Login..." : "Login with Email"}</button>;
+}
 
 const LoginForm = () => {
   const [errorMessage, formAction] = useFormState(login, undefined);
@@ -18,7 +24,7 @@ const LoginForm = () => {
     <form action={formAction} className={styles.form}>
       <input type="text" name="email" placeholder="email" />
       <input type="text" name="password" placeholder="Password" />
-      <button>Login with Email</button>
+      <LoginButton />
       {errorMessage ?? errorMessage}
       <Link href="/register">
         {"Don't have an account?"} <b>Register</b>
