@@ -3,13 +3,12 @@
 import { connectToDb } from "./utils";
 import { Post, User } from "./models";
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
 
 import { signIn, signOut } from "@/lib/auth";
 import { AuthError } from "next-auth";
 import bcrypt from "bcryptjs";
 
-export const addPost = async (formData) => {
+export const addPost = async (previousState, formData) => {
   //   const title = formData.get("title");
   //   const desc = formData.get("desc");
   //   const slug = formData.get("slug");
@@ -27,13 +26,13 @@ export const addPost = async (formData) => {
     });
 
     await newPost.save();
-    console.log("Saved to DB");
     // 캐쉬 상태인데도 블로그가 추가되면 url을 revalidation해서 업데이트한다.
     revalidatePath("/blog");
     revalidatePath("/admin");
+    return { sucess: "Saved to DB" };
   } catch (err) {
     console.log(err);
-    throw new Error("Something went wrong");
+    return { error: "Something went wrong" };
   }
 };
 
@@ -128,9 +127,12 @@ export const addUser = async (previousState, formData) => {
     console.log("Saved to DB");
     // 캐쉬 상태인데도 블로그가 추가되면 url을 revalidation해서 업데이트한다.
     revalidatePath("/admin");
+    return { success: "Saved to DB" };
   } catch (err) {
     console.log(err);
-    throw new Error("Something went wrong");
+    return { error: "Something went wrong" };
+
+    // throw new Error("Something went wrong");
   }
 };
 
